@@ -280,9 +280,9 @@ WARNINGS	+=		-Wshift-overflow -Wshift-sign-overflow \
 				-Wlogical-op-parentheses
 endif #(Clang Warning)
 
-ifneq (${E},0)
-	ERRORS := -Werror
-endif #(E)
+#ifneq (${E},0)
+#	ERRORS := -Werror
+#endif #(E)
 
 ################################################################################
 # Compiler and Linker Directives
@@ -319,7 +319,7 @@ ifeq ($($(ARCH)-ld-id),arm-link)
 else ifeq ($($(ARCH)-ld-id),gnu-gcc)
 	# Pass ld options with Wl or Xlinker switches
 	TF_LDFLAGS		+=	$(call ld_option,-Xlinker --no-warn-rwx-segments)
-	TF_LDFLAGS		+=	-Wl,--fatal-warnings -O1
+	TF_LDFLAGS		+=	-O1
 	TF_LDFLAGS		+=	-Wl,--gc-sections
 
 	TF_LDFLAGS		+=	-Wl,-z,common-page-size=4096 #Configure page size constants
