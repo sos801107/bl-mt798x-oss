@@ -35,6 +35,9 @@ ENABLE_ASSERTIONS		:= ${DEBUG}
 ENABLE_PMF			:= ${ENABLE_RUNTIME_INSTRUMENTATION}
 PLAT				:= ${DEFAULT_PLAT}
 
+# Include Kconfig script
+include makeconfig_pre.mk
+
 ################################################################################
 # Checkpatch script options
 ################################################################################
@@ -215,14 +218,14 @@ ifneq (${DEBUG}, 0)
 	ASFLAGS		+=	-g -Wa,-gdwarf-4
 
 	# Use LOG_LEVEL_INFO by default for debug builds
-	LOG_LEVEL	:=	40
+	LOG_LEVEL	?=	40
 else
 	BUILD_TYPE	:=	release
 	TF_CFLAGS	+=	-g -gdwarf-4
 	ASFLAGS		+=	-g -Wa,-gdwarf-4
 
 	# Use LOG_LEVEL_NOTICE by default for release builds
-	LOG_LEVEL	:=	20
+	LOG_LEVEL	?=	20
 endif #(Debug)
 
 # Default build string (git branch and commit)
@@ -1780,6 +1783,9 @@ help:
 	@echo ""
 	@echo "example: build all targets for the FVP platform:"
 	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+
+# Include Kconfig script
+include makeconfig_post.mk
 
 .PHONY: FORCE
 FORCE:;
