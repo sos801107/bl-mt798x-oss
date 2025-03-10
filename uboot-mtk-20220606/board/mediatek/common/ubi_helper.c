@@ -532,9 +532,9 @@ static int boot_from_ubi(struct mtd_info *mtd)
 	if (ret)
 		return ret;
 
-	ret = read_ubi_volume("kernel", (void *)data_load_addr, 0);
+	ret = read_ubi_volume("fit", (void *)data_load_addr, 0);
 	if (ret == -ENODEV)
-		ret = read_ubi_volume("fit", (void *)data_load_addr, 0);
+		ret = read_ubi_volume("kernel", (void *)data_load_addr, 0);
 	if (ret)
 		return ret;
 

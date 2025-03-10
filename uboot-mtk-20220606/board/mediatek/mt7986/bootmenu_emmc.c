@@ -291,9 +291,9 @@ int board_boot_default(void)
 #else
 	int ret;
 
-	ret = boot_from_mmc_partition(EMMC_DEV_INDEX, 0, PART_KERNEL_NAME);
+	ret = boot_from_mmc_partition(EMMC_DEV_INDEX, 0, PART_PRODUCTION_NAME);
 	if (ret == -ENODEV)
-		return boot_from_mmc_partition(EMMC_DEV_INDEX, 0, PART_PRODUCTION_NAME);
+		return boot_from_mmc_partition(EMMC_DEV_INDEX, 0, PART_KERNEL_NAME);
 
 	return ret;
 #endif /* CONFIG_MTK_DUAL_BOOT */
