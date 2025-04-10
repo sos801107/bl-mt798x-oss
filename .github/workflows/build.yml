@@ -19,7 +19,7 @@ jobs:
       - name: Generate build list
         id: list
         run: |
-          COMMIT="$(git log --pretty=format:"%H" -n 1 uboot-mtk-*/configs)"
+          COMMIT="$(git log -1 --pretty=format:"%aI" uboot-mtk-*/configs)"
           CONFIGS="$(git show --name-only "$COMMIT" | awk -F '/' '/^uboot.*defconfig$/ {printf "\"%s\",", $NF}' | sed 's/,$//')"
           JSON_LIST="{\"runner\": [\"ubuntu-latest\"],\"list\": [$CONFIGS]}"
           echo "$JSON_LIST" | jq .
