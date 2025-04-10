@@ -20,28 +20,8 @@ jobs:
         id: list
         run: |
           COMMIT="$(git log --pretty=format:"%H" -1 uboot-mtk-*/configs)"
-          CONFIGS="$("mt7981_360t7_defconfig",
-    "mt7981_abt_asr3000_defconfig",
-    "mt7981_ax3000t_an8855_defconfig",
-    "mt7981_ax3000t_defconfig",
-    "mt7981_cetron_ct3003_defconfig",
-    "mt7981_cmcc_a10_defconfig",
-    "mt7981_cmcc_rax3000m-emmc_defconfig",
-    "mt7981_cmcc_rax3000m_defconfig",
-    "mt7981_cudy_tr3000-v1_defconfig",
-    "mt7981_h3c_magic-nx30-pro_defconfig",
-    "mt7981_imou_lc-hx3001_defconfig",
-    "mt7981_jcg_q30_defconfig",
-    "mt7981_konka_komi-a31_defconfig",
-    "mt7981_livinet_zr-3020_defconfig",
-    "mt7981_nokia_ea0326gmp_defconfig",
-    "mt7981_wr30u_defconfig",
-    "mt7986_jdcloud_re-cp-03_defconfig",
-    "mt7986_netcore_n60-pro_defconfig",
-    "mt7986_redmi_ax6000_defconfig",
-    "mt7986_tplink_tl-xdr608x_defconfig",
-    "mt7986_tplink_tl-xtr8488_defconfig" )"
-    JSON_LIST="{\"runner\": [\"ubuntu-latest\"],\"list\": [$CONFIGS]}"
+          CONFIGS="/"mt7981_360t7_defconfig/",/"mt7981_abt_asr3000_defconfig/",/"mt7981_ax3000t_an8855_defconfig/",/"mt7981_ax3000t_defconfig/",/"mt7981_cetron_ct3003_defconfig/",/"mt7981_cmcc_a10_defconfig/",/"mt7981_cmcc_rax3000m-emmc_defconfig/",/"mt7981_cmcc_rax3000m_defconfig/",/"mt7981_cudy_tr3000-v1_defconfig/",/"mt7981_h3c_magic-nx30-pro_defconfig/",/"mt7981_imou_lc-hx3001_defconfig/",/"mt7981_jcg_q30_defconfig/",/"mt7981_konka_komi-a31_defconfig/",/"mt7981_livinet_zr-3020_defconfig/",/"mt7981_nokia_ea0326gmp_defconfig/",/"mt7981_wr30u_defconfig/",/"mt7986_jdcloud_re-cp-03_defconfig/",/"mt7986_netcore_n60-pro_defconfig/",/"mt7986_redmi_ax6000_defconfig/",/"mt7986_tplink_tl-xdr608x_defconfig/",/"mt7986_tplink_tl-xtr8488_defconfig/""
+          JSON_LIST="{\"runner\": [\"ubuntu-latest\"],\"list\": [$CONFIGS]}"
           echo "$JSON_LIST" | jq .
           echo "list=$JSON_LIST" >> "$GITHUB_OUTPUT"
 
