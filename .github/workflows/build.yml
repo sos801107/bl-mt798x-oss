@@ -37,7 +37,7 @@ jobs:
       #max-parallel: 4
       matrix:
         WRT_ATF: [atf-20250212-e09077068]
-        WRT_MTK: [uboot-mtk-20220606]
+        WRT_MTK: [uboot-mtk-20220606,uboot-mtk-20230718-09eda825]
 
     steps:
       - name: Checkout Projects
