@@ -1,7 +1,7 @@
 #!/bin/sh
 
 TOOLCHAIN=aarch64-linux-gnu-
-UBOOT_DIR=uboot-mtk-20220606
+#UBOOT_DIR=uboot-mtk-20220606
 UBOOT_DIR=uboot-mtk-20230718-09eda825
 #ATF_DIR=atf-20220606-637ba581b
 ATF_DIR=atf-20250212-e09077068
