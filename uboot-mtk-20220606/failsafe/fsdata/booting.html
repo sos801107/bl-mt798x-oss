@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>引导初始RAM磁盘</title>
+		<link rel="stylesheet" href="/style.css">
+		<script src="/index.js"></script>
+		<script>
+			function init() {
+				getversion();
+
+				ajax({
+					url: '/result',
+					done: function(response) {
+						if (response == 'failed') {
+							location = '/fail.html'
+							return
+						}
+
+						document.getElementById('title').innerHTML = 'BOOT SUCCESS'
+						document.getElementById('info').innerHTML = 'Your device was successfully booted into initramfs!'
+					},
+					timeout: 30000
+				})
+
+				ajax('/result', function(response) {
+					if (response == 'failed') {
+						location = '/fail.html'
+						return
+					}
+
+					document.getElementById('title').innerHTML = 'BOOT SUCCESS'
+					document.getElementById('info').innerHTML = 'Your device was successfully booted into initramfs!'
+				}, 30000)
+			}
+		</script>
+	</head>
+	<body onload="init()">
+		<div id="m">
+			<h1 id="title">引导初始RAM磁盘</h1>
+			<p id="info">
+				您的文件已成功上传！启动正在进行中，请稍候……<br>
+				此页面可能会短时间处于无响应状态。
+			</p>
+			<div id="l"></div>
+		</div>
+		<div id="version"></div>
+	</body>
+</html>
