@@ -2,36 +2,45 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>GPT 更新</title>
-		<link rel="stylesheet" href="/style.css">
+		<title>正在更新</title>
+		<style>h1,p,ul{margin:0;padding:0}html,body{font:13px/20px Arial,sans-serif;background:#EDEDED}#m{max-width:750px;margin:30px auto 10px;border:solid 1px #BABABA;background:#FFF;border-radius:7px;box-shadow:0 0 10px #D2D1D1}#m > *{padding:20px}h1{font:bold 50px/50px Tahoma;border-bottom:solid 1px #E8E8E8}a,h1{color:#2450AD;text-decoration:none}.i{margin:20px;border-radius:7px;text-align:justify}.w{background:#FEFDCE;border:solid 1px #FFC643}#version{text-align:center;}form,p,h1{text-align:center}ul{list-style:square;margin:0 0 0 20px}.i strong{margin:0 0 5px;display:block}#l{height:30px;width:30px;margin:0 auto 20px;-webkit-animation:r 1s infinite linear;-moz-animation:r 1s infinite linear;-o-animation:r 1s infinite linear;animation:r 1s infinite linear;border-left:7px solid #EAF1FF;border-right:7px solid #EAF1FF;border-bottom:7px solid #EAF1FF;border-top:7px solid #2450AD;border-radius:100%}@-webkit-keyframes r{from{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(359deg)}}@-moz-keyframes r{from{-moz-transform:rotate(0deg)}to{-moz-transform:rotate(359deg)}}@-o-keyframes r{from{-o-transform:rotate(0deg)}to{-o-transform:rotate(359deg)}}@keyframes r{from{transform:rotate(0deg)}to{transform:rotate(359deg)}}
+		</style>
 		<script src="/main.js"></script>
+		<script>
+			function init() {
+				getversion()
+
+				ajax({
+					url: '/result',
+					done: function(response) {
+						if (response == 'failed') {
+							location = '/fail.html'
+							return
+						}
+
+						document.getElementById('title').innerHTML = '更新成功!'
+						document.getElementById('info').innerHTML = '你的设备更新成功!正在重启设备...'
+					},
+					timeout: 30000
+				})
+
+				ajax('/result', function(response) {
+					if (response == 'failed') {
+						location = '/fail.html'
+						return
+					}
+
+					document.getElementById('title').innerHTML = '更新成功!'
+					document.getElementById('info').innerHTML = '你的设备更新成功!正在重启设备...'
+				}, 30000)
+			}
+		</script>
 	</head>
-	<body onload="getversion()">
+	<body onload="init()">
 		<div id="m">
-			<h1>GPT 更新</h1>
-			<p id="hint">您将在这台设备上更新 <strong>GPT</strong> <br>请从本地硬盘中选择文件，然后单击 <strong>更新</strong> 按钮.</p>
-			<form id="form">
-				<input id="file" type="file" name="gpt">
-				<input type="button" value="上传" onclick="upload('gpt')">
-			</form>
-			<div>
-				<div class="bar" id="bar" style="display: none; --percent: 0;"></div>
-			</div>
-			<div id="size" style="display: none;">镜像大小: xxxx</div>
-			<div id="md5" style="display: none;">MD5: xxxx</div>
-			<div id="upgrade" style="display: none;">
-				<p>U-Boot 已上传，请点击"更新"</p>
-				<button class="button" onclick="location = '/flashing.html'">Update</button>
-			</div>
-			<div class="i w">
-				<strong>警告</strong>
-				<ul>
-					<li>更新期间不要关闭设备电源</li>
-					<li>如果一切顺利，设备将重新启动</li>
-					<li>你可以上传任何你想要的东西，所以一定要为你的设备选择合适的 U-Boot</li>
-					<li>更新U-Boot是一项非常危险的操作，可能会损坏您的设备!</li>
-				</ul>
-			</div>
+			<h1 id="title">正在更新</h1>
+			<p id="info">您的文件已成功上传!更新正在进行中，设备将自动重置<br>更新时间取决于更新文件大小，可能需要几分钟...</p>
+			<div id="l"></div>
 		</div>
         <div id="version"></div>
 	</body>
