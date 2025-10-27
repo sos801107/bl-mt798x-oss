@@ -1,10 +1,10 @@
 #!/bin/sh
 
 TOOLCHAIN=aarch64-linux-gnu-
-UBOOT_DIR=uboot-mtk-20250711
-#UBOOT_DIR=uboot-mtk-20230718-09eda825
+#UBOOT_DIR=uboot-mtk-20220606
+UBOOT_DIR=uboot-mtk-20230718-09eda825
 #ATF_DIR=atf-20220606-637ba581b
-ATF_DIR=atf-20250711
+ATF_DIR=atf-20240117-bacca82a8
 
 if [ -z "$SOC" ] || [ -z "$BOARD" ]; then
 	echo "Usage: SOC=[mt7981|mt7986] BOARD=<board name> MULTI_LAYOUT=[0|1] $0"
@@ -60,7 +60,6 @@ if [ "$fixedparts" = "1" ]; then
 	echo "CONFIG_MEDIATEK_UBI_FIXED_MTDPARTS=y" >> "$UBOOT_DIR/.config"
 	echo "CONFIG_MTK_FIXED_MTD_MTDPARTS=y" >> "$UBOOT_DIR/.config"
 fi
-grep -q "CONFIG_ENV_VARS_UBOOT_CONFIG=y" "$UBOOT_DIR/.config" || echo "CONFIG_ENV_VARS_UBOOT_CONFIG=y" >> "$UBOOT_DIR/.config"
 make -C "$UBOOT_DIR" olddefconfig
 make -C "$UBOOT_DIR" clean
 make -C "$UBOOT_DIR" -j $(nproc) all
