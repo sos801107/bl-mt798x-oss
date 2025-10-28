@@ -36,7 +36,7 @@ static int write_ubi1_image(const void *data, size_t size,
 	}
 
 	/* Write kernel part to kernel MTD partition */
-	ret = mtd_update_generic(mtd_kernel, data, mtd_kernel->size， true);
+	ret = mtd_update_generic(mtd_kernel, data, mtd_kernel->size, true);
 	if (ret)
 		return ret;
 
@@ -52,7 +52,7 @@ static int mount_ubi(struct mtd_info *mtd)
 
 	ubi_exit();
 
-	ret = ubi_mtd_param_parse(mtd->name， NULL);
+	ret = ubi_mtd_param_parse(mtd->name, NULL);
 	if (ret)
 		return -ret;
 
@@ -65,7 +65,7 @@ static int mount_ubi(struct mtd_info *mtd)
 
 		ubi_mtd_param_parse(mtd->name, NULL);
 
-		ret = mtd_erase_skip_bad(mtd, 0, mtd->size, mtd->size， NULL, NULL,
+		ret = mtd_erase_skip_bad(mtd, 0, mtd->size, mtd->size, NULL, NULL,
 					 false);
 		if (ret)
 			return ret;
@@ -424,7 +424,7 @@ static int write_ubi2_tar_image_separate(const void *data, size_t size,
 	if (ret)
 		goto out;
 
-	ret = create_ubi_volume("rootfs_data"， 0, -1, true);
+	ret = create_ubi_volume("rootfs_data", 0, -1, true);
 
 out:
 	umount_ubi();
@@ -480,7 +480,7 @@ static int write_ubi_fit_image(const void *data, size_t size,
 	if (!find_ubi_volume("fit") && !find_ubi_volume("fip")) {
 		/* ubi is dirty, erase ubi and recreate volumes */
 		umount_ubi();
-		ubi_mtd_param_parse(mtd->name， NULL);
+		ubi_mtd_param_parse(mtd->name, NULL);
 		ret = mtd_erase_skip_bad(mtd, 0, mtd->size, mtd->size, NULL, NULL, false);
 		if (ret)
 			return ret;
@@ -508,7 +508,7 @@ static int write_ubi_fit_image(const void *data, size_t size,
 	if (ret)
 		goto out;
 
-	ret = create_ubi_volume("rootfs_data"， 0, -1， true);
+	ret = create_ubi_volume("rootfs_data", 0, -1, true);
 
 out:
 	umount_ubi();
@@ -532,9 +532,9 @@ static int boot_from_ubi(struct mtd_info *mtd)
 	if (ret)
 		return ret;
 
-	ret = read_ubi_volume("kernel", (void *)data_load_addr, 0);
+	ret = read_ubi_volume("fit", (void *)data_load_addr, 0);
 	if (ret == -ENODEV)
-		ret = read_ubi_volume("fit"， (void *)data_load_addr, 0);
+		ret = read_ubi_volume("kernel", (void *)data_load_addr, 0);
 	if (ret)
 		return ret;
 
