@@ -655,14 +655,29 @@ static int write_ubi_fit_image(const void *data, size_t size,
 	if (ret)
 		return ret;
 
+	if (!ubi_find_volume(PART_FIT_NAME) && !ubi_find_volume(PART_FIP_NAME)) {
+		/* ubi is dirty, erase ubi and recreate volumes */
+		ubi_exit();
+		ret = mtd_erase_skip_bad(mtd, 0, mtd->size, mtd->size, NULL, NULL, false);
+		if (ret)
+			return ret;
+
+		ret = mount_ubi(mtd, true);
+		if (ret)
+			return ret;
+
 #ifdef CONFIG_ENV_IS_IN_UBI
-	if (!ubi_find_volume(CONFIG_ENV_UBI_VOLUME))
-		create_ubi_volume(CONFIG_ENV_UBI_VOLUME， CONFIG_ENV_SIZE， -1， false);
-#endif
+		ret = create_ubi_volume(CONFIG_ENV_UBI_VOLUME, CONFIG_ENV_SIZE, UBI_VOL_NUM_AUTO, false);
+		if (ret)
+			goto out;
+
 #ifdef CONFIG_SYS_REDUNDAND_ENVIRONMENT
-	if (!ubi_find_volume(CONFIG_ENV_UBI_VOLUME_REDUND))
-		create_ubi_volume(CONFIG_ENV_UBI_VOLUME_REDUND， CONFIG_ENV_SIZE， -1, false);
-#endif
+		ret = create_ubi_volume(CONFIG_ENV_UBI_VOLUME_REDUND, CONFIG_ENV_SIZE, UBI_VOL_NUM_AUTO, false);
+		if (ret)
+			goto out;
+#endif /* CONFIG_SYS_REDUNDAND_ENVIRONMENT */
+#endif /* CONFIG_ENV_IS_IN_UBI */
+	}
 
 	/* Remove this volume first in case of no enough PEBs */
 	remove_ubi_volume(PART_ROOTFS_DATA_NAME);
