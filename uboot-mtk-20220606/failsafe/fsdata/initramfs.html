@@ -2,16 +2,16 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Load initramfs</title>
+		<title>加载 initramfs</title>
 		<link rel="stylesheet" href="/style.css">
 		<script src="/index.js"></script>
 	</head>
 	<body onload="startup()">
 		<div id="m">
-			<h1>LOAD INITRAMFS</h1>
+			<h1>加载 initramfs</h1>
 			<p id="hint">
-				You are going to load <strong>initramfs</strong> on the device.<br>
-				Please, choose file from your local hard drive and click <strong>Upload</strong> button.
+				您将要在设备上加载 <strong>initramfs</strong> .<br>
+				请选择本地硬盘中的文件，然后点击 <strong>上传</strong> 按钮。
 			</p>
 			<form id="form">
 				<input id="file" type="file" name="initramfs">
@@ -20,17 +20,17 @@
 			<div>
 				<div class="bar" id="bar" style="display: none; --percent: 0;"></div>
 			</div>
-			<div id="size" style="display: none;">Size: xxxx</div>
+			<div id="size" style="display: none;">镜像大小: xxxx</div>
 			<div id="md5" style="display: none;">MD5: xxxx</div>
 			<div id="upgrade" style="display: none;">
-				<p>If all information above is correct, click "Boot".</p>
+				<p>如果以上信息均正确，请点击 "Boot".</p>
 				<button class="button" onclick="location = '/booting.html'">Boot</button>
 			</div>
 			<div class="i w">
-				<strong>WARNINGS</strong>
+				<strong>警告</strong>
 				<ul>
-					<li>if everything goes well, the device will boot into the initramfs</li>
-					<li>you can upload whatever you want, so be sure that you choose proper initramfs image for your device</li>
+					<li>如果一切顺利，设备将启动进入 initramfs</li>
+					<li>您可以上传任意文件，但请确保选择适合设备的 initramfs 镜像</li>
 				</ul>
 			</div>
 		</div>
