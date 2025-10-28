@@ -4,7 +4,7 @@ TOOLCHAIN=aarch64-linux-gnu-
 UBOOT_DIR=uboot-mtk-20250711
 #UBOOT_DIR=uboot-mtk-20230718-09eda825
 #ATF_DIR=atf-20220606-637ba581b
-ATF_DIR=atf-20250711
+ATF_DIR=atf-20240117-bacca82a8
 
 if [ -z "$SOC" ] || [ -z "$BOARD" ]; then
 	echo "Usage: SOC=[mt7981|mt7986] BOARD=<board name> MULTI_LAYOUT=[0|1] $0"
