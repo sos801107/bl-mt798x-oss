@@ -18,7 +18,7 @@ on:
         required: true
         description: Enable Multiple Flash Layout Support
         type: choice
-        default: '1'
+        default: '0'
         options:
           - '0'
           - '1'
