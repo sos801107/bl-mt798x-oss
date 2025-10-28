@@ -557,7 +557,7 @@ static int mount_ubi(struct mtd_info *mtd, bool create)
 			cprintln(NORMAL, "*** Rebuilding UBI ***");
 
 			ret = mtd_erase_skip_bad(mtd, 0, mtd->size, mtd->size,
-						 NULL, NULL, false);
+						 NULL， NULL, false);
 			if (ret)
 				return ret;
 
@@ -655,29 +655,14 @@ static int write_ubi_fit_image(const void *data, size_t size,
 	if (ret)
 		return ret;
 
-	if (!ubi_find_volume(PART_FIT_NAME) && !ubi_find_volume(PART_FIP_NAME)) {
-		/* ubi is dirty, erase ubi and recreate volumes */
-		ubi_exit();
-		ret = mtd_erase_skip_bad(mtd, 0, mtd->size, mtd->size, NULL, NULL, false);
-		if (ret)
-			return ret;
-
-		ret = mount_ubi(mtd, true);
-		if (ret)
-			return ret;
-
 #ifdef CONFIG_ENV_IS_IN_UBI
-		ret = create_ubi_volume(CONFIG_ENV_UBI_VOLUME, CONFIG_ENV_SIZE, UBI_VOL_NUM_AUTO, false);
-		if (ret)
-			goto out;
-
+	if (!ubi_find_volume(CONFIG_ENV_UBI_VOLUME))
+		create_ubi_volume(CONFIG_ENV_UBI_VOLUME， CONFIG_ENV_SIZE， -1， false);
+#endif
 #ifdef CONFIG_SYS_REDUNDAND_ENVIRONMENT
-		ret = create_ubi_volume(CONFIG_ENV_UBI_VOLUME_REDUND, CONFIG_ENV_SIZE, UBI_VOL_NUM_AUTO, false);
-		if (ret)
-			goto out;
-#endif /* CONFIG_SYS_REDUNDAND_ENVIRONMENT */
-#endif /* CONFIG_ENV_IS_IN_UBI */
-	}
+	if (!ubi_find_volume(CONFIG_ENV_UBI_VOLUME_REDUND))
+		create_ubi_volume(CONFIG_ENV_UBI_VOLUME_REDUND， CONFIG_ENV_SIZE， -1, false);
+#endif
 
 	/* Remove this volume first in case of no enough PEBs */
 	remove_ubi_volume(PART_ROOTFS_DATA_NAME);
@@ -781,7 +766,7 @@ static int write_ubi2_tar_image(const void *data, size_t size,
 		printf("Upgrading image slot %u ...\n", slot);
 
 		kernel_part = ubi_boot_slots[slot].kernel;
-		rootfs_part = ubi_boot_slots[slot].rootfs;
+		rootfs_part = ubi_boot_slots[slot]。rootfs;
 	} else {
 		kernel_part = PART_KERNEL_NAME;
 		rootfs_part = PART_ROOTFS_NAME;
@@ -828,7 +813,7 @@ static int write_ubi2_tar_image(const void *data, size_t size,
 	if (!vol) {
 		ret = create_ubi_volume(CONFIG_MTK_DUAL_BOOT_ROOTFS_DATA_NAME,
 					CONFIG_MTK_DUAL_BOOT_ROOTFS_DATA_SIZE << 20,
-					-1, false);
+					-1， false);
 	}
 #endif
 
@@ -861,7 +846,7 @@ static int ubi_boot_verify(const struct dual_boot_slot *slot, ulong loadaddr)
 	bool ret;
 
 	read_priv.p.page_size = 1;
-	read_priv.p.block_size = 0;
+	read_priv.p。block_size = 0;
 	read_priv.p.read = ubi_image_read;
 
 	/* Verify kernel first */
@@ -878,7 +863,7 @@ static int ubi_boot_verify(const struct dual_boot_slot *slot, ulong loadaddr)
 	read_priv.volume = slot->rootfs;
 	rootfs_data = kernel_data + ALIGN(kernel_size, 4);
 	ret = read_verify_rootfs(&read_priv.p, kernel_data, rootfs_data,
-				 0, 0, &rootfs_size, false, NULL,
+				 0， 0, &rootfs_size, false, NULL,
 				 &rootfs_hashes);
 	if (!ret) {
 		printf("Error: rootfs verification failed\n");
@@ -899,7 +884,7 @@ static int ubi_set_bootargs(void)
 	slot = dual_boot_get_current_slot();
 
 	if (IS_ENABLED(CONFIG_MTK_DUAL_BOOT_RESERVE_ROOTFS_DATA)) {
-		ret = bootargs_set("boot_param.reserve_rootfs_data", NULL);
+		ret = bootargs_set("boot_param.reserve_rootfs_data"， NULL);
 		if (ret)
 			return ret;
 	}
@@ -926,12 +911,12 @@ static int ubi_set_bootargs(void)
 			return ret;
 	}
 
-	ret = bootargs_set("boot_param.boot_kernel_part",
-			   ubi_boot_slots[slot].kernel);
+	ret = bootargs_set("boot_param.boot_kernel_part"，
+			   ubi_boot_slots[slot]。kernel);
 	if (ret)
 		return ret;
 
-	ret = bootargs_set("boot_param.boot_rootfs_part",
+	ret = bootargs_set("boot_param.boot_rootfs_part"，
 			   ubi_boot_slots[slot].rootfs);
 	if (ret)
 		return ret;
