@@ -73,7 +73,7 @@ jobs:
 
       - name: Compile Prepare
         run: |
-          sed -i "5s/UBOOT_DIR=.*/UBOOT_DIR=${{matrix.WRT_MTK}}/" ./wrt/build.sh
+          sed -i "4s/UBOOT_DIR=.*/UBOOT_DIR=${{matrix.WRT_MTK}}/" ./wrt/build.sh
           sed -i "7s/ATF_DIR=.*/ATF_DIR=${{matrix.WRT_ATF}}/" ./wrt/build.sh
 
           # 收集 uboot 配置并生成 Uboots.txt
@@ -88,8 +88,6 @@ jobs:
           if [[ "$board" == "zyxel_ex5700" ]]; then
               continue
           fi
-    
-          
             key="$soc:$board"
             if [[ $rest == *_multi_layout ]]; then
               lines_map["$key"]="SOC=$soc BOARD=$board MULTI_LAYOUT=1 ./build.sh"
