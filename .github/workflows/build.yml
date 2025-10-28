@@ -85,7 +85,7 @@ jobs:
             board="${rest%_multi_layout}"
             
           # 仅处理指定设备
-          if [[ "$board" == "zyxel_ex5700" ]]; then
+          if [[ "$board" == "zyxel_ex5700" & "$board" == "tplink_tl-xtr8488" ]; then
               continue
           fi
           
