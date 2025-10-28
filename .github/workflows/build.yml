@@ -85,7 +85,9 @@ jobs:
             board="${rest%_multi_layout}"
             
           # 仅处理指定设备
-          if [[ "$board" == "zyxel_ex5700" & "$board" == "tplink_tl-xtr8488" ]; then
+          if [[ "$board" == "zyxel_ex5700" ]]; then
+          if [[ "$board" == "tplink_tl-xtr8488" ]]; then
+      
               continue
           fi
           
@@ -104,7 +106,7 @@ jobs:
           for soc in 7981 7986; do
             boards=$(awk -v s="SOC=mt$soc" '$0 ~ s {
               for (i=1; i<=NF; i++) if ($i ~ /^BOARD=/) {
-                split($i, a, "="); print toupper(a[2]);
+                split($i， a, "="); print toupper(a[2]);
               }
             }' ./Uboots.txt | sort -u | xargs)
             eval "TYPE_$soc=\"$boards\""
