@@ -83,7 +83,12 @@ jobs:
             soc="${BASH_REMATCH[1]}"
             rest="${BASH_REMATCH[2]}"
             board="${rest%_multi_layout}"
-
+            
+          # 仅处理指定设备
+          if [[ "$board" == "zyxel_ex5700" ]]; then
+              continue
+          fi
+          
             key="$soc:$board"
             if [[ $rest == *_multi_layout ]]; then
               lines_map["$key"]="SOC=$soc BOARD=$board MULTI_LAYOUT=1 ./build.sh"
