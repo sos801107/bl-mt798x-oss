@@ -460,7 +460,7 @@ static int write_ubi2_tar_image(const void *data, size_t size,
 	if (ret)
 		goto out;
 
-	ret = create_ubi_volume("rootfs_data"， 0, -1, true);
+	ret = create_ubi_volume("rootfs_data", 0, -1, true);
 
 out:
 	umount_ubi();
